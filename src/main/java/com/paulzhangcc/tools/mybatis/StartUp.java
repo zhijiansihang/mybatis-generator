@@ -1,7 +1,6 @@
 package com.paulzhangcc.tools.mybatis;
 
 import com.paulzhangcc.tools.mybatis.generator.CustomMyBatisGenerator;
-import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -27,7 +26,7 @@ public class StartUp {
             boolean overwrite = true;
             //属性进行判断，是否合并（即追加）
             ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            InputStream is = classloader.getResourceAsStream(CONFIG_MYSQL);
+            InputStream is = classloader.getResourceAsStream(CONFIG_ORACLE);
             ConfigurationParser cp = new ConfigurationParser(warnings);
             Configuration config = cp.parseConfiguration(is);
 
