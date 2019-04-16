@@ -9,6 +9,15 @@ import java.util.List;
  * @date 2019/4/16
  */
 public class MysqlGeneratorModel {
+    public String getGeneratedVoFlag() {
+        return generatedVoFlag;
+    }
+
+    public void setGeneratedVoFlag(boolean generatedVoFlag) {
+        this.generatedVoFlag = generatedVoFlag+"";
+    }
+
+    private String generatedVoFlag ="false";//是否生成
     private String targetPackage;
     private String targetProject;
     private JdbcInfo jdbc;

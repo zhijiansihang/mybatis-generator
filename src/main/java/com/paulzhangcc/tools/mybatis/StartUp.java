@@ -1,15 +1,11 @@
 package com.paulzhangcc.tools.mybatis;
 
 import com.paulzhangcc.tools.mybatis.generator.CustomMyBatisGenerator;
-import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import sun.font.FontUtilities;
 
-import javax.sound.midi.Soundbank;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +21,12 @@ public class StartUp {
     public static final String CONFIG_MYSQL = "generatorConfig-mysql.xml";
     public static final String CONFIG_ORACLE = "generatorConfig-oracle.xml";
     public static void main(String[] args) throws URISyntaxException {
+        CustomMyBatisGenerator gen = gen(true);
+        System.out.println(gen);
+    }
+
+    public static CustomMyBatisGenerator gen(boolean isWriteFile)  {
+        CustomMyBatisGenerator myBatisGenerator = null;
         try {
             List<String> warnings = new ArrayList<String>();
             boolean overwrite = true;
@@ -35,9 +37,13 @@ public class StartUp {
             Configuration config = cp.parseConfiguration(is);
 
             DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-            CustomMyBatisGenerator myBatisGenerator = new CustomMyBatisGenerator(config, callback, warnings);
+            myBatisGenerator = new CustomMyBatisGenerator(config, callback, warnings);
 
-            myBatisGenerator.generate(null);
+            if (isWriteFile){
+                myBatisGenerator.generate();
+            }else {
+                myBatisGenerator.generateAndNoWriteFiles();
+            }
             for (String warning : warnings){
                 System.out.println(warning);
             }
@@ -45,5 +51,7 @@ public class StartUp {
             e.printStackTrace();
         }
         System.out.println("success!!!");
+        return myBatisGenerator;
     }
+
 }

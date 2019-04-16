@@ -138,6 +138,17 @@ public class CustomMyBatisGenerator {
         generate(callback, null, null, true);
     }
 
+    public void generate() throws SQLException,
+            IOException, InterruptedException {
+        generate(null, null, null, true);
+    }
+
+
+    public void generateAndNoWriteFiles() throws SQLException,
+            IOException, InterruptedException {
+        generate(null, null, null, false);
+    }
+
     /**
      * This is the main method for generating code. This method is long running, but progress can be provided and the
      * method can be canceled through the ProgressCallback interface.

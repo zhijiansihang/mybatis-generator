@@ -19,6 +19,7 @@ public class FreemakerUtil {
         FreemakerUtil freemakerUtil = new FreemakerUtil();
         Template template = freemakerUtil.geTemplate("generatorConfig-mysql.freemarker");
         MysqlGeneratorModel mysqlGeneratorModel = new MysqlGeneratorModel();
+        mysqlGeneratorModel.setGeneratedVoFlag(true);
         mysqlGeneratorModel.setTargetPackage("com.zhijiansihang.gen");
         mysqlGeneratorModel.setTargetProject("C:\\pengrun\\work\\code\\git\\mybatis-generator\\gen");
         MysqlGeneratorModel.JdbcInfo jdbcInfo = new MysqlGeneratorModel.JdbcInfo();
