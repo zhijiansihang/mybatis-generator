@@ -28,7 +28,7 @@ public class StartUp {
                 .targetPackage("com.qiumi.core.gen")
                 .targetProject("F:\\tools\\mybatis-generator\\target")
                 .dbDriverClass("com.mysql.jdbc.Driver")
-                .dbConnectionURL("jdbc:mysql://118.25.1.116:3306/qiumi?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                .dbConnectionURL("jdbc:mysql://127.0.0.1/qiumi?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                 .dbUsername("root")
                 .dbPassword("root")
                 .build();

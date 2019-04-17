@@ -157,9 +157,9 @@ public class DatabaseUtil {
     public static void main(String[] args) throws Exception {
         MybatisGeneratorConfigModel mysqlGeneratorModel = MybatisGeneratorConfigModel.builder()
                 .dbDriverClass("com.mysql.jdbc.Driver")
-                .dbConnectionURL("jdbc:mysql://123.56.0.93:3306/ApolloConfigDB?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                .dbConnectionURL("jdbc:mysql://127.0.0.1:3306/ApolloConfigDB?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                 .dbUsername("root")
-                .dbPassword("Paul123!@#")
+                .dbPassword("root")
                 .build();
         Map<Table, List<Column>> columns = info(mysqlGeneratorModel);
         System.out.println(columns);
