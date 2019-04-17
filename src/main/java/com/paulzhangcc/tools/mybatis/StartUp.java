@@ -28,9 +28,9 @@ public class StartUp {
                 .targetPackage("com.qiumi.core.gen")
                 .targetProject("F:\\tools\\mybatis-generator\\target")
                 .dbDriverClass("com.mysql.jdbc.Driver")
-                .dbConnectionURL("jdbc:mysql://118.25.0.116:3306/qiumi?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                .dbConnectionURL("jdbc:mysql://118.25.1.116:3306/qiumi?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                 .dbUsername("root")
-                .dbPassword("QiuMi#2019")
+                .dbPassword("root")
                 .build();
 
         mysqlGeneratorModel.getTableList().add(
@@ -41,7 +41,8 @@ public class StartUp {
                         .build()
         );
 
-        MyBatisGeneratorUtil.generator(mysqlGeneratorModel);
+        List<Class> generatorModelClass = MyBatisGeneratorUtil.getGeneratorModelClass(mysqlGeneratorModel);
+        System.out.println(generatorModelClass);
 //        Compiler  compiler = new JdkCompiler();
 //        Class<?> aClass = compiler.compile(gen.getGeneratedJavaFiles().get(0).getFormattedContent(), Thread.currentThread().getContextClassLoader());
 //        String string = JSON.toJSONString(aClass.newInstance());

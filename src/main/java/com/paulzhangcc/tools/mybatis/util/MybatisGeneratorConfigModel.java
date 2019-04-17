@@ -46,6 +46,27 @@ public class MybatisGeneratorConfigModel {
     @Builder.Default
     private List<TableInfo> tableList = new ArrayList<>();
 
+    public void onlyModel() {
+        this.javaVoGeneratorFlag = "false";
+        this.sqlMapGeneratorFlag = "false";
+        this.javaClientGeneratorFlag = "false";
+        this.javaModelGeneratorFlag = "true";
+    }
+
+    public void genCheck() {
+        boolean yes = false;
+        if ("true".equals(this.javaVoGeneratorFlag) ||
+                "true".equals(this.sqlMapGeneratorFlag) ||
+                "true".equals(this.javaClientGeneratorFlag) ||
+                "true".equals(this.javaModelGeneratorFlag)
+                ) {
+            yes = true;
+        }
+        if (!yes){
+            throw new IllegalArgumentException();
+        }
+    }
+
     @Data
     @Builder
     public static class TableInfo {
@@ -65,7 +86,7 @@ public class MybatisGeneratorConfigModel {
 
         tableList.forEach((v) -> {
             String tableName = v.getTableName();
-            if (tableName != null && tableName.trim().length() > 0){
+            if (tableName != null && tableName.trim().length() > 0) {
                 result.add(tableName.trim());
             }
         });

@@ -1,19 +1,13 @@
 package com.paulzhangcc.tools.mybatis.util;
 
+import lombok.Data;
+
 /**
  * @author paul
  * @description
  * @date 2019/4/17
  */
+@Data
 public class ObjectRefUtil<T> {
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
-    }
-
     private volatile T value;
-
 }
