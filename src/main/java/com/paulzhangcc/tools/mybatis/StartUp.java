@@ -1,28 +1,50 @@
 package com.paulzhangcc.tools.mybatis;
 
 import com.paulzhangcc.tools.mybatis.generator.CustomMyBatisGenerator;
+import com.paulzhangcc.tools.mybatis.util.MyBatisGeneratorUtil;
+import com.paulzhangcc.tools.mybatis.util.MybatisGeneratorConfigModel;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- *
  * @author: Paul Zhang
  * @date: 16:21 2017/12/27
  */
 public class StartUp {
+
     /**
      * 读取resource目录下的配置文件  注意生成是xml 要删除  否则生成的会追加报错
      */
     public static final String CONFIG_MYSQL = "generatorConfig-mysql.xml";
     public static final String CONFIG_ORACLE = "generatorConfig-oracle.xml";
-    public static void main(String[] args) throws URISyntaxException {
-        CustomMyBatisGenerator gen = gen(true);
-        System.out.println(gen);
+
+    public static void main(String[] args) throws Exception {
+        MybatisGeneratorConfigModel mysqlGeneratorModel = MybatisGeneratorConfigModel.builder()
+                .targetPackage("com.qiumi.core.gen")
+                .targetProject("F:\\tools\\mybatis-generator\\target")
+                .dbDriverClass("com.mysql.jdbc.Driver")
+                .dbConnectionURL("jdbc:mysql://118.25.0.116:3306/qiumi?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                .dbUsername("root")
+                .dbPassword("QiuMi#2019")
+                .build();
+
+        mysqlGeneratorModel.getTableList().add(
+                MybatisGeneratorConfigModel.TableInfo.builder()
+                        .tableName("qm_question")
+                        .domainObjectName("QmQuestion")
+                        .generatedKey("id")
+                        .build()
+        );
+
+        MyBatisGeneratorUtil.generator(mysqlGeneratorModel);
+//        Compiler  compiler = new JdkCompiler();
+//        Class<?> aClass = compiler.compile(gen.getGeneratedJavaFiles().get(0).getFormattedContent(), Thread.currentThread().getContextClassLoader());
+//        String string = JSON.toJSONString(aClass.newInstance());
     }
 
     public static CustomMyBatisGenerator gen(boolean isWriteFile)  {
