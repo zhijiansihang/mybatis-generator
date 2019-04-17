@@ -55,4 +55,23 @@ public class MybatisGeneratorConfigModel {
         @Builder.Default
         private List<String> ignoreColumns = new ArrayList<>();
     }
+
+
+    public List<String> tables() {
+        if (tableList == null || tableList.size() == 0) {
+            return null;
+        }
+        List<String> result = new ArrayList<>();
+
+        tableList.forEach((v) -> {
+            String tableName = v.getTableName();
+            if (tableName != null && tableName.trim().length() > 0){
+                result.add(tableName.trim());
+            }
+        });
+        if (result.size() == 0) {
+            return null;
+        }
+        return result;
+    }
 }
