@@ -36,7 +36,7 @@ public class MyBatisGeneratorUtil {
     }
 
 
-    private static boolean generator(MybatisGeneratorConfigModel mybatisGeneratorConfigModel, Consumer<CustomMyBatisGenerator> consumer, ObjectRef<CustomMyBatisGenerator> objectRef) {
+    private static boolean generator(MybatisGeneratorConfigModel mybatisGeneratorConfigModel, Consumer<CustomMyBatisGenerator> consumer, ObjectRefUtil<CustomMyBatisGenerator> objectRefUtil) {
         try {
             List<String> warnings = new ArrayList<String>();
             String generatorConfig = MybatisGeneratorConfigUtil.generator(mybatisGeneratorConfigModel);
@@ -48,8 +48,8 @@ public class MyBatisGeneratorUtil {
             for (String warning : warnings) {
                 System.out.println(warning);
             }
-            if (objectRef != null) {
-                objectRef.setValue(myBatisGenerator);
+            if (objectRefUtil != null) {
+                objectRefUtil.setValue(myBatisGenerator);
             }
             return true;
         } catch (Exception e) {

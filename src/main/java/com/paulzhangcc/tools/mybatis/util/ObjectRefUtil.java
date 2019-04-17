@@ -5,7 +5,7 @@ package com.paulzhangcc.tools.mybatis.util;
  * @description
  * @date 2019/4/17
  */
-public class ObjectRef<T> {
+public class ObjectRefUtil<T> {
     public T getValue() {
         return value;
     }
