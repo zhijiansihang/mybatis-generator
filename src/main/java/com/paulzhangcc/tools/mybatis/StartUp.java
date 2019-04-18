@@ -25,30 +25,28 @@ public class StartUp {
 
     public static void main(String[] args) throws Exception {
         MybatisGeneratorConfigModel mysqlGeneratorModel = MybatisGeneratorConfigModel.builder()
-                .targetPackage("com.qiumi.core.gen")
-                .targetProject("F:\\tools\\mybatis-generator\\target")
+                .targetPackage("com.meimeitech.video.rest")
+                .targetProject("F:\\shipin\\mmt-code-generator\\src\\main\\java")
                 .dbDriverClass("com.mysql.jdbc.Driver")
-                .dbConnectionURL("jdbc:mysql://127.0.0.1/qiumi?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                .dbConnectionURL("jdbc:mysql://127.0.0.1:3306/ApolloConfigDB?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                 .dbUsername("root")
                 .dbPassword("root")
+                .templateName("tk-generatorConfig-mysql.ftl")
+                //.templateName("generatorConfig-mysql.ftl")
                 .build();
 
         mysqlGeneratorModel.getTableList().add(
                 MybatisGeneratorConfigModel.TableInfo.builder()
-                        .tableName("qm_question")
-                        .domainObjectName("QmQuestion")
-                        .generatedKey("id")
+                        .tableName("ReleaseHistory")
+                        .domainObjectName("ReleaseHistory")
+                        .generatedKey("Id")
                         .build()
         );
 
-        List<Class> generatorModelClass = MyBatisGeneratorUtil.getGeneratorModelClass(mysqlGeneratorModel);
-        System.out.println(generatorModelClass);
-//        Compiler  compiler = new JdkCompiler();
-//        Class<?> aClass = compiler.compile(gen.getGeneratedJavaFiles().get(0).getFormattedContent(), Thread.currentThread().getContextClassLoader());
-//        String string = JSON.toJSONString(aClass.newInstance());
+        MyBatisGeneratorUtil.generator(mysqlGeneratorModel);
     }
 
-    public static CustomMyBatisGenerator gen(boolean isWriteFile)  {
+    public static CustomMyBatisGenerator gen(boolean isWriteFile) {
         CustomMyBatisGenerator myBatisGenerator = null;
         try {
             List<String> warnings = new ArrayList<String>();
@@ -62,12 +60,12 @@ public class StartUp {
             DefaultShellCallback callback = new DefaultShellCallback(overwrite);
             myBatisGenerator = new CustomMyBatisGenerator(config, callback, warnings);
 
-            if (isWriteFile){
+            if (isWriteFile) {
                 myBatisGenerator.generate();
-            }else {
+            } else {
                 myBatisGenerator.generateAndNoWriteFiles();
             }
-            for (String warning : warnings){
+            for (String warning : warnings) {
                 System.out.println(warning);
             }
         } catch (Exception e) {
