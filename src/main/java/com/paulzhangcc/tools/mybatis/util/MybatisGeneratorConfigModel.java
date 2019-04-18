@@ -14,6 +14,8 @@ import java.util.List;
 @Data
 @Builder
 public class MybatisGeneratorConfigModel {
+    private String templateName;
+    private String templateLocation;
 
     /**
      * 是否生成vo

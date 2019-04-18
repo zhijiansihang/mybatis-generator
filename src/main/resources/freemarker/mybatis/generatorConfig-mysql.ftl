@@ -9,17 +9,20 @@
         <property name="endingDelimiter" value='`'/>
         <property name="javaFileEncoding" value="UTF-8"/>
 <#if javaVoGeneratorFlag == "true">
-        <property name="vo.targetPackage" value="${targetPackage}.vo"/>
+        <property name="vo.targetPackage" value="${targetPackage}.VO"/>
         <property name="vo.targetProject" value="${targetProject}"/>
         <property name="vo.enableSubPackages" value="true"/>
         <property name="vo.trimStrings" value="true"/>
 </#if>
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
 <#if javaVoGeneratorFlag == "true">
         <plugin type="com.paulzhangcc.tools.mybatis.plugin.VOPlugin"/>
 </#if>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
+            <property name="useToStringFromRoot" value="true"/>
+        </plugin>
 
         <commentGenerator type="com.paulzhangcc.tools.mybatis.generator.CommentGeneratorHelper">
             <property name="suppressAllComments" value="fase"/>
@@ -38,7 +41,7 @@
         </javaTypeResolver>
 
 <#if javaModelGeneratorFlag == "true">
-        <javaModelGenerator targetPackage="${targetPackage}.dao.po"
+        <javaModelGenerator targetPackage="${targetPackage}.dao.DO"
                             targetProject="${targetProject}">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -54,7 +57,7 @@
 
 <#if javaClientGeneratorFlag == "true">
         <javaClientGenerator type="MIXEDMAPPER"
-                             targetPackage="${targetPackage}.dao"
+                             targetPackage="${targetPackage}.dao.mapper"
                              targetProject="${targetProject}">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
@@ -62,9 +65,8 @@
 
 
 <#list tableList as table>
-        <table tableName="${table.tableName}" mapperName="${table.domainObjectName}Dao" domainObjectName="${table.domainObjectName}"
-               enableCountByExample="true" enableDeleteByExample="false"
-               enableSelectByExample="true" enableUpdateByExample="false">
+        <table tableName="${table.tableName}" mapperName="${table.domainObjectName}DAO" domainObjectName="${table.domainObjectName}"
+               >
             <property name="useActualColumnNames" value="false"/>
 <#if table.generatedKey??>
             <generatedKey column="${table.generatedKey}" sqlStatement="MySql" identity="true"/>

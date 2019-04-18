@@ -41,7 +41,14 @@ public class MybatisGeneratorConfigUtil {
     }
 
     public static String generator(MybatisGeneratorConfigModel mybatisGeneratorConfigModel) {
-        Template template = geTemplate("generatorConfig-mysql.freemarker", "/ftl");
+        if (mybatisGeneratorConfigModel.getTemplateName() == null) {
+            mybatisGeneratorConfigModel.setTemplateName("generatorConfig-mysql.ftl");
+        }
+        if (mybatisGeneratorConfigModel.getTemplateLocation() == null) {
+            mybatisGeneratorConfigModel.setTemplateLocation("/freemarker/mybatis");
+        }
+
+        Template template = geTemplate(mybatisGeneratorConfigModel.getTemplateName(), mybatisGeneratorConfigModel.getTemplateLocation());
         if (template == null) {
             throw new IllegalArgumentException();
         }
@@ -59,8 +66,9 @@ public class MybatisGeneratorConfigUtil {
         try {
             Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
             cfg.setDefaultEncoding("UTF-8");
-            cfg.setClassLoaderForTemplateLoading(Thread.currentThread().getContextClassLoader(), "/ftl");
+            cfg.setClassLoaderForTemplateLoading(Thread.currentThread().getContextClassLoader(), basePackagePath);
             cfg.setSharedVariable("stringEscapeXml", new StringEscapeXml10TemplateMethodModelEx());
+            cfg.setSharedVariable("originalTemplateParameter", new OriginalTemplateParameterMethodModelEx());
             Template temp = cfg.getTemplate(name);
             return temp;
         } catch (Exception e) {
@@ -77,6 +85,17 @@ public class MybatisGeneratorConfigUtil {
             }
             String value = list.get(0).toString();
             return StringEscapeUtils.escapeXml10(value);
+        }
+    }
+
+    private static class OriginalTemplateParameterMethodModelEx implements TemplateMethodModelEx {
+        @Override
+        public Object exec(List list) throws TemplateModelException {
+            if (list == null || list.size() != 1) {
+                throw new TemplateModelException();
+            }
+            String value = list.get(0).toString();
+            return "${" + value + "}";
         }
     }
 }

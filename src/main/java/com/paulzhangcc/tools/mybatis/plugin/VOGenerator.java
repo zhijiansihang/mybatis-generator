@@ -1,37 +1,22 @@
 package com.paulzhangcc.tools.mybatis.plugin;
 
 
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansField;
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansGetter;
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansSetter;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.Plugin;
+import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.RootClassInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.FullyQualifiedTable;
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.Plugin;
-import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.codegen.RootClassInfo;
-import sun.text.resources.hi.JavaTimeSupplementary_hi_IN;
-
-/**
- * @author Jeff Butler
- */
-public class VoGenerator extends AbstractJavaGenerator {
+import static org.mybatis.generator.internal.util.JavaBeansUtil.*;
+public class VOGenerator extends AbstractJavaGenerator {
 
     private FullyQualifiedJavaType fullyQualifiedJavaType;
 
-    public VoGenerator(FullyQualifiedJavaType fullyQualifiedJavaType) {
+    public VOGenerator(FullyQualifiedJavaType fullyQualifiedJavaType) {
         super();
         this.fullyQualifiedJavaType = fullyQualifiedJavaType;
     }
@@ -70,10 +55,12 @@ public class VoGenerator extends AbstractJavaGenerator {
             }
 
             Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
+
             if (plugins.modelFieldGenerated(field, topLevelClass,
                     introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addField(field);
+                field.getAnnotations().clear();
                 topLevelClass.addImportedType(field.getType());
             }
 
@@ -97,6 +84,7 @@ public class VoGenerator extends AbstractJavaGenerator {
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().modelBaseRecordClassGenerated(
                 topLevelClass, introspectedTable)) {
+            topLevelClass.getAnnotations().clear();
             answer.add(topLevelClass);
         }
         return answer;

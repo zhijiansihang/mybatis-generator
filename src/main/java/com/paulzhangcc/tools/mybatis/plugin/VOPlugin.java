@@ -7,7 +7,6 @@ import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.codegen.mybatis3.model.BaseRecordGenerator;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.PropertyRegistry;
 
@@ -40,13 +39,12 @@ public class VOPlugin extends PluginAdapter {
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName()+"VO");
 
-        String baseRecordType = introspectedTable.getBaseRecordType();
         String s = sb.toString();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
                 s);
 
-        AbstractJavaGenerator javaGenerator = new VoGenerator(type);
+        AbstractJavaGenerator javaGenerator = new SampleVOGenerator(type);
         javaGenerator.setContext(context);
         javaGenerator.setIntrospectedTable(introspectedTable);
         List<CompilationUnit> compilationUnits = javaGenerator
@@ -62,6 +60,7 @@ public class VOPlugin extends PluginAdapter {
         return generatedJavaFiles;
     }
 
+    @Override
     //与表无关的生成GeneratedJavaFile
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
         return null;

@@ -71,6 +71,10 @@ public class MyBatisGeneratorUtil {
 
     private static boolean generator(MybatisGeneratorConfigModel mybatisGeneratorConfigModel, Consumer<CustomMyBatisGenerator> consumer, ObjectRefUtil<CustomMyBatisGenerator> objectRefUtil) {
         mybatisGeneratorConfigModel.genCheck();
+        List<MybatisGeneratorConfigModel.TableInfo> tableList = mybatisGeneratorConfigModel.getTableList();
+        if (tableList == null || tableList.size() == 0){
+            throw new IllegalArgumentException();
+        }
         try {
             List<String> warnings = new ArrayList<String>();
             String generatorConfig = MybatisGeneratorConfigUtil.generator(mybatisGeneratorConfigModel);
