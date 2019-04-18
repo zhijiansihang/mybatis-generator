@@ -5,7 +5,7 @@
 
 <!--suppress MybatisGenerateCustomPluginInspection -->
 <generatorConfiguration>
-    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+    <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8"/>
         <property name="useMapperCommentGenerator" value="true"/>
     <#if javaVoGeneratorFlag == "true">
@@ -17,6 +17,7 @@
     <#if javaVoGeneratorFlag == "true">
         <plugin type="com.paulzhangcc.tools.mybatis.plugin.VOPlugin"/>
     </#if>
+        <plugin type="com.paulzhangcc.tools.mybatis.plugin.FlatModelRulesPlugin"/>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
             <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
@@ -29,22 +30,26 @@
         </plugin>
 
         <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
-            <property name="templateFormatter" value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
             <property name="targetProject" value="${targetProject}"/>
             <property name="targetPackage" value="${targetPackage}.dao.mapper"/>
             <property name="templatePath" value="freemarker/mybatis/mapper.ftl"/>
             <property name="mapperSuffix" value="DAO"/>
-            <property name="fileName" value="${originalTemplateParameter("tableClass.shortClassName")}${originalTemplateParameter("mapperSuffix")}.java"/>
+            <property name="fileName"
+                      value="${originalTemplateParameter("tableClass.shortClassName")}${originalTemplateParameter("mapperSuffix")}.java"/>
         </plugin>
         <!--mapper.xml-->
         <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
-            <property name="templateFormatter" value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
             <property name="targetProject" value="${targetProject}"/>
             <property name="targetPackage" value="${targetPackage}.dao.xml"/>
             <property name="mapperPackage" value="${targetPackage}.dao.mapper"/>
             <property name="templatePath" value="freemarker/mybatis/mapperXml.ftl"/>
             <property name="mapperSuffix" value="DAO"/>
-            <property name="fileName" value="${originalTemplateParameter("tableClass.shortClassName")}${originalTemplateParameter("mapperSuffix")}.xml"/>
+            <property name="fileName"
+                      value="${originalTemplateParameter("tableClass.shortClassName")}${originalTemplateParameter("mapperSuffix")}.xml"/>
         </plugin>
 
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
@@ -61,16 +66,16 @@
 
         <javaModelGenerator targetPackage="${targetPackage}.dao.DO" targetProject="${targetProject}"/>
 
-<#list tableList as table>
+    <#list tableList as table>
         <table tableName="${table.tableName}" domainObjectName="${table.domainObjectName}">
             <property name="useActualColumnNames" value="false"/>
-<#if table.generatedKey??>
+            <#if table.generatedKey??>
                 <generatedKey column="${table.generatedKey}" sqlStatement="MySql" identity="true"/>
-</#if>
-<#list table.ignoreColumns as ignoreColumn>
-                <ignoreColumn column="${ignoreColumn}" />
-</#list>
+            </#if>
+            <#list table.ignoreColumns as ignoreColumn>
+                <ignoreColumn column="${ignoreColumn}"/>
+            </#list>
         </table>
-</#list>
+    </#list>
     </context>
 </generatorConfiguration>

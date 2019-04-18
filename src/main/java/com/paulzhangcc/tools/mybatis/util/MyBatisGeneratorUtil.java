@@ -3,12 +3,17 @@ package com.paulzhangcc.tools.mybatis.util;
 import com.paulzhangcc.tools.mybatis.generator.CustomMyBatisGenerator;
 import com.paulzhangcc.tools.mybatis.util.compiler.Compiler;
 import com.paulzhangcc.tools.mybatis.util.compiler.JdkCompiler;
+import freemarker.template.Template;
+import org.apache.commons.io.FileUtils;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
+import java.io.File;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -89,10 +94,28 @@ public class MyBatisGeneratorUtil {
             if (objectRefUtil != null) {
                 objectRefUtil.setValue(myBatisGenerator);
             }
+            copyUserInfo(mybatisGeneratorConfigModel);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    private static void copyUserInfo(MybatisGeneratorConfigModel mybatisGeneratorConfigModel){
+        Template template = MybatisGeneratorConfigUtil.geTemplate("readme.ftl", "/freemarker/mybatis");
+        StringBuilderWriter stringBuilderWriter = new StringBuilderWriter();
+        try {
+            template.process(mybatisGeneratorConfigModel,stringBuilderWriter);
+            String targetProject = mybatisGeneratorConfigModel.getTargetProject();
+            targetProject = targetProject.endsWith("/")?targetProject.substring(0,targetProject.length()-1):targetProject;
+            String path = targetProject + "/" + mybatisGeneratorConfigModel.getTargetPackage().replaceAll("\\.", "/") + "/dao/";
+            FileUtils.writeStringToFile(new File(path+"readme.txt"),stringBuilderWriter.toString(), Charset.forName("UTF-8"));
+            InputStream resourceAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("freemarker/mybatis/mybatis-config.xml");
+            FileUtils.copyToFile(resourceAsStream,new File(path+"mybatis-config.xml"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

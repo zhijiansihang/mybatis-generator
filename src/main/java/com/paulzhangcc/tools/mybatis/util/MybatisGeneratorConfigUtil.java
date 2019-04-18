@@ -62,7 +62,7 @@ public class MybatisGeneratorConfigUtil {
 
     }
 
-    private static Template geTemplate(String name, String basePackagePath) {
+    public static Template geTemplate(String name, String basePackagePath) {
         try {
             Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
             cfg.setDefaultEncoding("UTF-8");
@@ -98,4 +98,6 @@ public class MybatisGeneratorConfigUtil {
             return "${" + value + "}";
         }
     }
+
+
 }
