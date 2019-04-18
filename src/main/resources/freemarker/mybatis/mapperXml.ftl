@@ -14,10 +14,23 @@
         <result column="${field.columnName}" jdbcType="${field.jdbcType}" property="${field.fieldName}" />
     </#list>
 </#if>
-<#if tableClass.blobFields??>
-    <#list tableClass.blobFields as field>
-        <result column="${field.columnName}" jdbcType="${field.jdbcType}" property="${field.fieldName}" />
-    </#list>
-</#if>
     </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="${tableClass.fullClassName}">
+    <#if tableClass.pkFields??>
+        <#list tableClass.pkFields as field>
+            <id column="${field.columnName}" jdbcType="${field.jdbcType}" property="${field.fieldName}" />
+        </#list>
+    </#if>
+    <#if tableClass.baseFields??>
+        <#list tableClass.baseFields as field>
+            <result column="${field.columnName}" jdbcType="${field.jdbcType}" property="${field.fieldName}" />
+        </#list>
+    </#if>
+    <#if tableClass.blobFields??>
+        <#list tableClass.blobFields as field>
+            <result column="${field.columnName}" jdbcType="${field.jdbcType}" property="${field.fieldName}" />
+        </#list>
+    </#if>
+    </resultMap>
+
 </mapper>
