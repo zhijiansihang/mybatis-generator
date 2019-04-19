@@ -813,7 +813,7 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
     }
 
     public String apiFileFolder(String templateName) {
-        return outputFolder + "/" + apiPackage(templateName).replace('.', '/');
+        return outputFolder + "/" +sourceFolder+"/"+ apiPackage(templateName).replace('.', '/');
     }
 
 
