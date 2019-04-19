@@ -60,7 +60,7 @@ public class SpringCodegen extends AbstractJavaCodegen
         super();
         outputFolder = "generated-code/javaSpring";
         apiTestTemplateFiles.clear();
-        embeddedTemplateDir = templateDir = "JavaSpring";
+        embeddedTemplateDir = templateDir = "SwaggerSpring";
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
         invokerPackage = "io.swagger.api";
@@ -108,7 +108,7 @@ public class SpringCodegen extends AbstractJavaCodegen
 
     @Override
     public String getName() {
-        return "spring";
+        return "EagleSpring";
     }
 
     @Override

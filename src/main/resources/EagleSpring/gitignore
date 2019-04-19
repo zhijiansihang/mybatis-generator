@@ -1,0 +1,29 @@
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+/docker-dir/service.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+.swagger-codegen-ignore
+
+### IntelliJ IDEA ###
+.idea
+.swagger-codegen
+*.iws
+*.iml
+*.ipr
+/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
