@@ -8,17 +8,21 @@
         <property name="beginningDelimiter" value='`'/>
         <property name="endingDelimiter" value='`'/>
         <property name="javaFileEncoding" value="UTF-8"/>
-<#if javaVoGeneratorFlag == "true">
-        <property name="vo.targetPackage" value="${targetPackage}.VO"/>
-        <property name="vo.targetProject" value="${targetProject}"/>
-        <property name="vo.enableSubPackages" value="true"/>
-        <property name="vo.trimStrings" value="true"/>
-</#if>
+
+    <#if javaVoGeneratorFlag == "true">
+        <plugin type="com.paulzhangcc.tools.mybatis.plugin.VOPlugin">
+            <property name="targetProject" value="${targetProject}"/>
+            <property name="targetPackage" value="${targetPackage}.VO"/>
+            <property name="classSuffix" value="VO"/>
+        </plugin>
+    </#if>
+
+        <plugin type="com.paulzhangcc.tools.mybatis.plugin.JsonPlugin">
+            <property name="targetProject" value="${targetProject}"/>
+        </plugin>
 
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
-<#if javaVoGeneratorFlag == "true">
-        <plugin type="com.paulzhangcc.tools.mybatis.plugin.VOPlugin"/>
-</#if>
+
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
             <property name="useToStringFromRoot" value="true"/>

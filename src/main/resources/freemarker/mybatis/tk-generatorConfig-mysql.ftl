@@ -8,16 +8,19 @@
     <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8"/>
         <property name="useMapperCommentGenerator" value="true"/>
+
     <#if javaVoGeneratorFlag == "true">
-        <property name="vo.targetPackage" value="${targetPackage}.VO"/>
-        <property name="vo.targetProject" value="${targetProject}"/>
-        <property name="vo.enableSubPackages" value="true"/>
-        <property name="vo.trimStrings" value="true"/>
-    </#if>
-    <#if javaVoGeneratorFlag == "true">
-        <plugin type="com.paulzhangcc.tools.mybatis.plugin.VOPlugin"/>
+        <plugin type="com.paulzhangcc.tools.mybatis.plugin.VOPlugin">
+            <property name="targetProject" value="${targetProject}"/>
+            <property name="targetPackage" value="${targetPackage}.VO"/>
+            <property name="classSuffix" value="VO"/>
+        </plugin>
     </#if>
         <plugin type="com.paulzhangcc.tools.mybatis.plugin.FlatModelRulesPlugin"/>
+
+        <plugin type="com.paulzhangcc.tools.mybatis.plugin.JsonPlugin">
+            <property name="targetProject" value="${targetProject}"/>
+        </plugin>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
             <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
@@ -39,6 +42,7 @@
             <property name="fileName"
                       value="${originalTemplateParameter("tableClass.shortClassName")}${originalTemplateParameter("mapperSuffix")}.java"/>
         </plugin>
+
         <!--mapper.xml-->
         <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
             <property name="templateFormatter"

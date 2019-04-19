@@ -29,19 +29,16 @@
         <!-- 生成的Java文件的编码 -->
         <property name="javaFileEncoding" value="UTF-8"/>
 
-
-        <property name="vo.targetPackage" value="com.zhijiansihang.gen.vo"/>
-        <property name="vo.targetProject" value="C:\pengrun\work\code\git\mybatis-generator\gen"/>
-        <property name="vo.enableSubPackages" value="true"/>
-        <property name="vo.trimStrings" value="true"/>
-
-
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
             <property name="useToStringFromRoot" value="true"/>
         </plugin>
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
-        <plugin type="com.paulzhangcc.tools.mybatis.plugin.VOPlugin"/>
+        <plugin type="com.paulzhangcc.tools.mybatis.plugin.VOPlugin">
+            <property name="targetProject" value="${targetProject}"/>
+            <property name="targetPackage" value="${targetPackage}.VO"/>
+            <property name="classSuffix" value="VO"/>
+        </plugin>
 
 
         <!--在table中关闭了所有example增删改查-->

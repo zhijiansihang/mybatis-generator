@@ -5,7 +5,6 @@ import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl.JdbcType
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Types;
 import java.util.*;
 
@@ -107,13 +106,6 @@ public class Test {
         String name = bytes.getClass().getName();
         System.out.println(name);
 
-
-        URL url = new URL("jdbc:mysql://123.56.0.93:3306/ApolloConfigDB?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
-        System.out.println(url.getProtocol());
-        System.out.println(url.getHost());
-        System.out.println(url.getPort());
-        System.out.println(url.getPath());
-        System.out.println(url.getQuery());
     }
 
 }

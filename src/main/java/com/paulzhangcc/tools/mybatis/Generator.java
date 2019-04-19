@@ -29,11 +29,11 @@ public class Generator {
                 .targetPackage("com.meimeitech.video.rest")
                 .targetProject("F:\\shipin\\mmt-code-generator\\src\\main\\java")
                 .dbDriverClass("com.mysql.jdbc.Driver")
-                .dbConnectionURL("jdbc:mysql://127.0.0.1:3306/ApolloConfigDB?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                .dbConnectionURL("jdbc:mysql://123.56.0.93:3306/ApolloConfigDB?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                 .dbUsername("root")
-                .dbPassword("root")
-                //.templateName("tk-generatorConfig-mysql.ftl")
-                .templateName("generatorConfig-mysql.ftl")
+                .dbPassword("Paul123!@#")
+                .templateName("tk-generatorConfig-mysql.ftl")
+                //.templateName("generatorConfig-mysql.ftl")
                 .build();
 
         mysqlGeneratorModel.getTableList().add(

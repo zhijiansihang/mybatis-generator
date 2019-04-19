@@ -33,6 +33,14 @@
             <version>12.2.0.1</version>
         </dependency>-->
 
+        <!-- https://mvnrepository.com/artifact/io.swagger/swagger-codegen -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-codegen</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
         <dependency>
             <groupId>org.freemarker</groupId>
