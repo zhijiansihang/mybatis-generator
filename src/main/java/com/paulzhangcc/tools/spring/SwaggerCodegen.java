@@ -3,6 +3,7 @@ package com.paulzhangcc.tools.spring;
 import com.paulzhangcc.tools.spring.cmd.*;
 import io.airlift.airline.Cli;
 import io.airlift.airline.Help;
+import io.swagger.codegen.CodegenConfigLoader;
 
 /**
  * User: lanwen Date: 24.03.15 Time: 17:56
@@ -13,6 +14,8 @@ import io.airlift.airline.Help;
  */
 public class SwaggerCodegen {
     public static void main(String[] args) {
+        CodegenConfigLoader.forName("eaglespring");
+
         String version = Version.readVersionFromResources();
         @SuppressWarnings("unchecked")
         Cli.CliBuilder<Runnable> builder =

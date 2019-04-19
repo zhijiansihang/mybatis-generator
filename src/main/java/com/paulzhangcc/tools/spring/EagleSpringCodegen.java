@@ -133,7 +133,7 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
 
     @Override
     public String getName() {
-        return "EagleSpring";
+        return "eaglespring";
     }
 
     @Override
