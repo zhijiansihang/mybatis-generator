@@ -1,0 +1,13 @@
+package {{servicePackage}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+{{#operations}}
+public interface {{classname}}Service{
+{{#operation}}
+
+    {{>returnTypes}} {{operationId}}({{#allParams}}{{>optionalDataType}} {{paramName}} {{#hasMore}},{{/hasMore}}{{/allParams}});
+{{/operation}}
+}
+{{/operations}}

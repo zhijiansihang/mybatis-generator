@@ -1,0 +1,37 @@
+package {{serviceImplPackage}};
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+{{#imports}}import {{import}};
+{{/imports}}
+import {{servicePackage}}.{{classname}}Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+
+@Service
+{{#operations}}
+public class {{classname}}ServiceImpl implements {{classname}}Service{
+
+    private static final Logger logger = LoggerFactory.getLogger({{classname}}ServiceImpl.class);
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+{{#operation}}
+    public {{>returnTypes}} {{operationId}}({{#allParams}}{{>optionalDataType}} {{paramName}} {{#hasMore}},{{/hasMore}}{{/allParams}}) {
+{{#examples}}
+        try {
+             return objectMapper.readValue("{{#lambdaRemoveLineBreak}}{{#lambdaEscapeDoubleQuote}}{{{example}}}{{/lambdaEscapeDoubleQuote}}{{/lambdaRemoveLineBreak}}", {{>exampleReturnTypes}}.class);
+        } catch (IOException e) {
+            logger.error("Couldn't serialize response for content type {{{contentType}}}", e);
+            return null;
+        }
+{{/examples}}
+    }
+
+{{/operation}}
+}
+{{/operations}}
