@@ -62,8 +62,8 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
     protected boolean useOptional = false;
     protected boolean openFeign = false;
 
-    protected String apiServicePackage="";
-    protected String serviceImplPackage="";
+    protected String apiServicePackage = "";
+    protected String serviceImplPackage = "";
 
     public EagleSpringCodegen() {
         super();
@@ -73,8 +73,6 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
         outputFolder = "generated-code/javaSpring";
         apiTestTemplateFiles.clear();
         embeddedTemplateDir = templateDir = "EagleSpring";
-//        groupId = "com.meimeitech";
-//        artifactId = "meme2c";
         apiPackage = groupId + "." + artifactId + ".swagger.controller";
         apiServicePackage = groupId + "." + artifactId + ".swagger.service";
         serviceImplPackage = groupId + "." + artifactId + ".service";
@@ -279,7 +277,6 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
             }
         }
 
-//        supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
         if (isInit) {
             supportingFiles.add(new SupportingFile("build.mustache", "", "build.gradle"));
             supportingFiles.add(new SupportingFile("dockerfile.mustache", dockerDir, "Dockerfile"));
@@ -290,18 +287,12 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
         if (!this.interfaceOnly) {
 
             if (library.equals(DEFAULT_LIBRARY)) {
-//                supportingFiles.add(new SupportingFile("homeController.mustache",
-//                        (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "HomeController.java"));
                 if (isInit) {
                     supportingFiles.add(new SupportingFile("swagger2SpringBoot.mustache",
                             (sourceFolder + File.separator + basePackage).replace(".", java.io.File.separator), "Swagger2SpringBoot.java"));
                 }
                 supportingFiles.add(new SupportingFile("RFC3339DateFormat.mustache",
                         (sourceFolder + File.separator + util).replace(".", java.io.File.separator), "RFC3339DateFormat.java"));
-//                supportingFiles.add(new SupportingFile("UserContext.mustache",
-//                        (sourceFolder + File.separator + util).replace(".", java.io.File.separator), "UserContext.java"));
-//                supportingFiles.add(new SupportingFile("UserContextHolder.mustache",
-//                        (sourceFolder + File.separator + util).replace(".", java.io.File.separator), "UserContextHolder.java"));
                 if (isInit) {
                     supportingFiles.add(new SupportingFile("application.mustache",
                             ("src.main.resources").replace(".", java.io.File.separator), "application.properties"));
@@ -337,20 +328,8 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
                 if (isInit) {
                     apiTemplateFiles.put("apiServiceImpl.mustache", "ServiceImpl.java");
                 }
-//                supportingFiles.add(new SupportingFile("apiException.mustache",
-//                        (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
-//                supportingFiles.add(new SupportingFile("apiResponseMessage.mustache",
-//                        (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
-//                supportingFiles.add(new SupportingFile("notFoundException.mustache",
-//                        (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
-//                supportingFiles.add(new SupportingFile("apiOriginFilter.mustache",
-//                        (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
-//                supportingFiles.add(new SupportingFile("swaggerDocumentationConfig.mustache",
-//                        (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerDocumentationConfig.java"));
             }
         } else if (this.swaggerDocketConfig && !library.equals(SPRING_CLOUD_LIBRARY)) {
-//            supportingFiles.add(new SupportingFile("swaggerDocumentationConfig.mustache",
-//                    (sourceFolder + File.separator + configPackage).replace(".", java.io.File.separator), "SwaggerDocumentationConfig.java"));
         }
 
         if ("threetenbp".equals(dateLibrary)) {
@@ -364,8 +343,6 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
                     supportingFiles.add(new SupportingFile("FilterConfiguration.mustache",
                             (sourceFolder + File.separator + initConfigPackage).replace(".", java.io.File.separator), "FilterConfiguration.java"));
                 }
-//                supportingFiles.add(new SupportingFile("AuthenticationFilter.mustache",
-//                        (sourceFolder + File.separator + filter).replace(".", java.io.File.separator), "AuthenticationFilter.java"));
             }
         }
 
@@ -393,7 +370,6 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
             additionalProperties.put("isOpenFeign", "true");
         }
 
-        // Some well-known Spring or Spring-Cloud response wrappers
         switch (this.responseWrapper) {
             case "Future":
             case "Callable":
@@ -419,7 +395,6 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
                 break;
         }
 
-        // add lambda for mustache templates
         additionalProperties.put("lambdaEscapeDoubleQuote", new Mustache.Lambda() {
             @Override
             public void execute(Template.Fragment fragment, Writer writer) throws IOException {
@@ -813,7 +788,7 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
     }
 
     public String apiFileFolder(String templateName) {
-        return outputFolder + "/" +sourceFolder+"/"+ apiPackage(templateName).replace('.', '/');
+        return outputFolder + "/" + sourceFolder + "/" + apiPackage(templateName).replace('.', '/');
     }
 
 
@@ -822,8 +797,6 @@ public class EagleSpringCodegen extends AbstractJavaCodegen
         String suffix = apiTemplateFiles().get(templateName);
         return apiFileFolder(templateName) + File.separator + toApiFilename(tag) + suffix;
     }
-
-
 
 
 }

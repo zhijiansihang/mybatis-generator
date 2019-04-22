@@ -24,23 +24,24 @@ public class Generator {
         return MyBatisGeneratorUtil.generator(model);
     }
 
+
     public static void main(String[] args) throws Exception {
         MybatisGeneratorConfigModel mysqlGeneratorModel = MybatisGeneratorConfigModel.builder()
                 .targetPackage("com.meimeitech.video.rest")
-                .targetProject("F:\\shipin\\mmt-code-generator\\src\\main\\java")
+                .targetProject("F:\\tools\\mybatis-generator\\target")
                 .dbDriverClass("com.mysql.jdbc.Driver")
-                .dbConnectionURL("jdbc:mysql://123.56.0.93:3306/ApolloConfigDB?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                .dbConnectionURL("jdbc:mysql://127.0.0.1:3306/qiumi?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                 .dbUsername("root")
-                .dbPassword("Paul123!@#")
-                .templateName("tk-generatorConfig-mysql.ftl")
-                //.templateName("generatorConfig-mysql.ftl")
+                .dbPassword("root")
+                //.templateName("tk-generatorConfig-mysql.ftl")
+                .templateName("generatorConfig-mysql.ftl")
                 .build();
 
         mysqlGeneratorModel.getTableList().add(
                 MybatisGeneratorConfigModel.TableInfo.builder()
-                        .tableName("ReleaseHistory")
-                        .domainObjectName("ReleaseHistory")
-                        .generatedKey("Id")
+                        .tableName("qm_goods")
+                        .domainObjectName("QmGoods")
+                        .generatedKey("id")
                         .build()
         );
         MyBatisGeneratorUtil.generator(mysqlGeneratorModel);
