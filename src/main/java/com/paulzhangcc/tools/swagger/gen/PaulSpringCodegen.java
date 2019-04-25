@@ -24,10 +24,13 @@ public class PaulSpringCodegen  extends SpringCodegen {
     public void processOpts() {
         super.processOpts();
         writePropertyBack(USE_BEANVALIDATION, useBeanValidation);
-        apiTemplateFiles.remove("api.mustache");
-        apiTemplateFiles.remove("apiController.mustache");
-        apiTemplateFiles.put("apiRestController.mustache", "RestController.java");
-        apiTemplateFiles.put("apiService.mustache","Service.java");
+        writePropertyBack(USE_OPTIONAL, useOptional);
+        if ("spring-boot".equals(library)) {
+            apiTemplateFiles.remove("api.mustache");
+            apiTemplateFiles.remove("apiController.mustache");
+            apiTemplateFiles.put("apiRestController.mustache", "RestController.java");
+            apiTemplateFiles.put("apiService.mustache", "Service.java");
+        }
     }
 
     @Override

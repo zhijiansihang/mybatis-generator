@@ -88,7 +88,17 @@ public class CustomDefaultGenerator extends DefaultGenerator {
         contextPath = config.escapeText(swagger.getBasePath() == null ? "" : swagger.getBasePath());
         basePath = config.escapeText(getHost());
         basePathWithoutHost = config.escapeText(swagger.getBasePath());
-
+        this.isGenerateSwaggerMetadata = getAdditionalPropertyDefaultSwitch("isGenerateSwaggerMetadata",Boolean.FALSE);
+    }
+    private Boolean getAdditionalPropertyDefaultSwitch(final String key, final Boolean defaultValue) {
+        Object result = null;
+        if (this.config.additionalProperties().containsKey(key)) {
+            result = this.config.additionalProperties().get(key);
+        }
+        if (result != null && result instanceof String) {
+            return Boolean.valueOf((String) result);
+        }
+        return defaultValue;
     }
 
     private String getHost() {

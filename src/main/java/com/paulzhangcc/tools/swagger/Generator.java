@@ -1,4 +1,4 @@
-package com.paulzhangcc.gen;
+package com.paulzhangcc.tools.swagger;
 
 import com.paulzhangcc.tools.swagger.cmd.SwaggerCodegen;
 import com.samskivert.mustache.Mustache;
@@ -14,7 +14,7 @@ import java.util.Map;
  * @date 2019/4/17
  */
 @Builder
-public class Test {
+public class Generator {
     /**
      *  http://127.0.0.1:7050/v2/api-docs/402835816a34a2d3016a34a482760002
      *  file:///F:/tools/mybatis-generator/src/test/resources/user.json
@@ -36,9 +36,19 @@ public class Test {
                 "--library spring-cloud -l PaulSpring " +
                 "--api-package="+targetPackage+".gen.swagger.client --model-package="+targetPackage+".gen.swagger.model " +
                 "-o "+targetProject+" --additional-properties useBeanValidation=false,hideGenerationTimestamp=true,isOpenFeign=true";
+        SwaggerCodegen.main(string.split("\\s+"));
     }
 
     public static void main(String[] args) throws Exception {
+        Generator.builder()
+                .swaggerJson("http://127.0.0.1:7050/v2/api-docs/402835816a34a2d3016a34a482760002")
+                .targetProject("F:\\code\\spring-cloud\\spring-cloud-quick-start\\spring-cloud-service-b")
+                .targetPackage("com.paulzhangcc.service").build().generatorController();
+
+        Generator.builder()
+                .swaggerJson("http://127.0.0.1:7050/v2/api-docs/402835816a34a2d3016a34a482760002")
+                .targetProject("F:\\code\\spring-cloud\\spring-cloud-quick-start\\spring-cloud-service-a")
+                .targetPackage("com.paulzhangcc.service").build().generatorFeignClient();
     }
 
     public static void testTemplate() {
