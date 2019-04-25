@@ -10,11 +10,13 @@ import java.util.Map;
 /**
  * @author paul
  */
-public class PaulSpringCodegen  extends SpringCodegen {
-    public PaulSpringCodegen(){
+public class PaulSpringCodegen extends SpringCodegen {
+    public PaulSpringCodegen() {
         super();
-        embeddedTemplateDir = templateDir = "PaulSpring";
+        templateDir = "PaulSpring";
+        embeddedTemplateDir = "spring";
     }
+
     @Override
     public String getName() {
         return "PaulSpring";
@@ -28,14 +30,14 @@ public class PaulSpringCodegen  extends SpringCodegen {
         if ("spring-boot".equals(library)) {
             apiTemplateFiles.remove("api.mustache");
             apiTemplateFiles.remove("apiController.mustache");
-            apiTemplateFiles.put("apiRestController.mustache", "RestController.java");
+            apiTemplateFiles.put("apiController.mustache", "Controller.java");
             apiTemplateFiles.put("apiService.mustache", "Service.java");
         }
     }
 
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
-        super.postProcessModelProperty(model,property);
+        super.postProcessModelProperty(model, property);
         model.imports.remove("ApiModelProperty");
         model.imports.remove("ApiModel");
     }
