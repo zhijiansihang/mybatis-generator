@@ -42,8 +42,7 @@ public class Test {
     public void generatorAxiosClient(){
         String string = "generate -i" + swaggerJson+" "+
                 "-l typescript-axios " +
-                "--api-package="+targetPackage+".api --model-package="+targetPackage+".model " +
-                "-o "+targetProject;
+                "-o "+targetProject+" --additional-properties isGenerateSupportingFiles=true";
         SwaggerCodegen.main(string.split("\\s+"));
     }
 
@@ -52,8 +51,9 @@ public class Test {
     public static void main(String[] args) throws Exception {
         builder()
                 .swaggerJson("file:///F:/tools/mybatis-generator/src/test/resources/user.json")
-                .targetProject("F:\\gen/js1")
-                .targetPackage("paul").build().generatorAxiosClient();
+                .targetProject("F:\\code\\vue-admin-template\\src")
+                //.targetProject("F:\\gen\\js2")
+                .build().generatorAxiosClient();
 
     }
 

@@ -2,10 +2,13 @@ package com.paulzhangcc.tools.swagger.gen;
 
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.AbstractTypeScriptClientCodegen;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.StringProperty;
+
+import java.io.File;
 
 /**
  * @author paul
@@ -30,6 +33,13 @@ public class TypeScriptAxiosClientCodegen extends AbstractTypeScriptClientCodege
         return "typescript-axios";
     }
 
+
+    @Override
+    public void processOpts() {
+        super.processOpts();
+        supportingFiles.add(new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
+        supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
+    }
 
     @Override
     public String getHelp() {

@@ -1,50 +1,14 @@
 {{>licenseInfo}}
-
-{{#jqueryAlreadyImported}}
-declare var $ : any;
-{{/jqueryAlreadyImported}}
-{{^jqueryAlreadyImported}}
-import * as $ from 'jquery';
-{{/jqueryAlreadyImported}}
 import * as models from '../model/models';
-import { COLLECTION_FORMATS } from '../variables';
-import { Configuration } from '../configuration';
-
-/* tslint:disable:no-unused-variable member-ordering */
-
+import axios from '../utils/request';
+import {AxiosPromise, AxiosRequestConfig} from "axios";
 {{#operations}}
-
 {{#description}}
 /**
  * {{&description}}
  */
 {{/description}}
 export class {{classname}} {
-    protected basePath = '{{{basePath}}}';
-    public defaultHeaders: Array<string> = [];
-    public defaultExtraJQueryAjaxSettings?: JQueryAjaxSettings = null;
-    public configuration: Configuration = new Configuration();
-
-    constructor(basePath?: string, configuration?: Configuration, defaultExtraJQueryAjaxSettings?: JQueryAjaxSettings) {
-        if (basePath) {
-            this.basePath = basePath;
-        }
-        if (configuration) {
-            this.configuration = configuration;
-        }
-        if (defaultExtraJQueryAjaxSettings) {
-            this.defaultExtraJQueryAjaxSettings = defaultExtraJQueryAjaxSettings;
-        }
-    }
-
-    private extendObj<T1, T2 extends T1>(objA: T2, objB: T2): T1|T2 {
-        for (let key in objB) {
-            if (objB.hasOwnProperty(key)) {
-                objA[key] = objB[key];
-            }
-        }
-        return objA;
-    }
 
 {{#operation}}
     /**
@@ -56,15 +20,14 @@ export class {{classname}} {
      * @param {{paramName}} {{description}}
      {{/allParams}}
      */
-    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}extraJQueryAjaxSettings?: JQueryAjaxSettings): JQueryPromise<{ response: JQueryXHR; {{#returnType}}body: {{{returnType}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
-        let localVarPath = this.basePath + '{{{path}}}'{{#pathParams}}.replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
+    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}{{#hasMore}}, {{/hasMore}}{{/allParams}}): AxiosPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}any{{/returnType}}> {
+        let localVarPath = '{{{path}}}'{{#pathParams}}.replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
 
         let queryParameters: any = {};
         let headerParams: any = {};
 {{#hasFormParams}}
         let formParams = new FormData();
         let reqHasFile = false;
-
 {{/hasFormParams}}
 {{#allParams}}
 {{#required}}
@@ -104,8 +67,6 @@ export class {{classname}} {
         }
         {{/isListContainer}}
 {{/queryParams}}
-
-        localVarPath = localVarPath + "?" + $.param(queryParameters);
 {{#formParams}}
 {{#isFile}}
         reqHasFile = true;
@@ -140,105 +101,41 @@ export class {{classname}} {
         {{^isListContainer}}
         headerParams['{{baseName}}'] = String({{paramName}});
         {{/isListContainer}}
-
 {{/headerParams}}
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            {{#consumes}}
-            '{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}
-            {{/consumes}}
-        ];
 
-        // to determine the Accept header
-        let produces: string[] = [
-            {{#produces}}
-            '{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}
-            {{/produces}}
-        ];
-
-{{#authMethods}}
-        // authentication ({{name}}) required
-{{#isApiKey}}
-{{#isKeyInHeader}}
-        if (this.configuration.apiKey) {
-            headerParams['{{keyParamName}}'] = this.configuration.apiKey;
-        }
-
-{{/isKeyInHeader}}
-{{#isKeyInQuery}}
-        if (this.configuration.apiKey) {
-            queryParameters.set('{{keyParamName}}', this.configuration.apiKey);
-        }
-
-{{/isKeyInQuery}}
-{{/isApiKey}}
-{{#isBasic}}
-        // http basic authentication required
-        if (this.configuration.username || this.configuration.password) {
-            headerParams['Authorization'] = 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password);
-        }
-
-{{/isBasic}}
-{{#isOAuth}}
-        // oauth required
-        if (this.configuration.accessToken) {
-            let accessToken = typeof this.configuration.accessToken === 'function'
-                ? this.configuration.accessToken()
-                : this.configuration.accessToken;
-            headerParams['Authorization'] = 'Bearer ' + accessToken;
-        }
-
-{{/isOAuth}}
-{{/authMethods}}
 {{#hasFormParams}}
         if (!reqHasFile) {
             headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
         }
-
 {{/hasFormParams}}
-
 {{#bodyParam}}
         headerParams['Content-Type'] = 'application/json';
-
 {{/bodyParam}}
-        let requestOptions: JQueryAjaxSettings = {
-            url: localVarPath,
-            type: '{{httpMethod}}',
-            headers: headerParams,
-            processData: false
-        };
-
+        let data = null;
 {{#bodyParam}}
-        requestOptions.data = JSON.stringify({{paramName}});
+        data = JSON.stringify({{paramName}});
 {{/bodyParam}}
-        if (headerParams['Content-Type']) {
-            requestOptions.contentType = headerParams['Content-Type'];
-        }
+
 {{#hasFormParams}}
-        requestOptions.data = formParams;
-        if (reqHasFile) {
-            requestOptions.contentType = false;
-        }
+        data = formParams;
 {{/hasFormParams}}
-
-        if (extraJQueryAjaxSettings) {
-            requestOptions = (<any>Object).assign(requestOptions, extraJQueryAjaxSettings);
-        }
-
-        if (this.defaultExtraJQueryAjaxSettings) {
-            requestOptions = (<any>Object).assign(requestOptions, this.defaultExtraJQueryAjaxSettings);
-        }
-
-        let dfd = $.Deferred();
-        $.ajax(requestOptions).then(
-            (data: {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}any{{/returnType}}, textStatus: string, jqXHR: JQueryXHR) =>
-                dfd.resolve(jqXHR, data),
-            (xhr: JQueryXHR, textStatus: string, errorThrown: string) =>
-                dfd.reject(xhr, errorThrown)
-        );
-        return dfd.promise();
+        let method = '{{httpMethod}}'.toLowerCase();
+        let axiosRequestConfig: AxiosRequestConfig = {
+            url: localVarPath,
+            method: method,
+            headers: headerParams,
+            params: queryParameters,
+            data: data,
+        };
+        return axios.request<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}any{{/returnType}}>(axiosRequestConfig);
     }
 
 {{/operation}}
+    protected COLLECTION_FORMATS = {
+        'csv': ',',
+        'tsv': '   ',
+        'ssv': ' ',
+        'pipes': '|'
+    }
 }
 {{/operations}}
