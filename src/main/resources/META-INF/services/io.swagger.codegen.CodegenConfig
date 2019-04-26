@@ -1,2 +1,3 @@
 com.paulzhangcc.tools.swagger.gen.ShawnSpringCodegen
 com.paulzhangcc.tools.swagger.gen.PaulSpringCodegen
+com.paulzhangcc.tools.swagger.gen.TypeScriptAxiosClientCodegen
