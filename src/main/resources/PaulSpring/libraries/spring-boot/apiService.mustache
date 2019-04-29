@@ -16,7 +16,7 @@ public interface {{classname}}Service {
     /**
      *  {{{notes}}}
      */
-    {{>returnTypes}} {{operationId}}({{#allParams}}{{>optionalDataType}} {{paramName}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{^jdk8}};{{/jdk8}}
+    {{>returnTypes}} {{operationId}}({{#allParams}}{{>queryParamsService}}{{>pathParamsService}}{{>headerParamsService}}{{>bodyParamsService}}{{>formParamsService}}{{#hasMore}},{{/hasMore}}{{/allParams}}){{^jdk8}};{{/jdk8}}
 {{/operation}}
 }
 {{/operations}}

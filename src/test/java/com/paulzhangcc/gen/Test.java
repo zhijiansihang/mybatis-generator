@@ -51,9 +51,15 @@ public class Test {
     public static void main(String[] args) throws Exception {
         builder()
                 .swaggerJson("file:///F:/tools/mybatis-generator/src/test/resources/user.json")
-                .targetProject("F:\\code\\vue-admin-template\\src")
-                //.targetProject("F:\\gen\\js2")
-                .build().generatorAxiosClient();
+                .targetPackage("com.paulzhangcc")
+                .targetProject("F:\\gen\\demo")
+                .build().generatorController();
+
+//        builder()
+//                .swaggerJson("file:///F:/tools/mybatis-generator/src/test/resources/user.json")
+//                .targetProject("F:\\code\\vue-admin-template\\src")
+//                //.targetProject("F:\\gen\\js2")
+//                .build().generatorAxiosClient();
 
     }
 
