@@ -15,6 +15,7 @@
     </#list>
 </#if>
     </resultMap>
+<#if (tableClass.blobFields?size > 0) >
     <resultMap id="ResultMapWithBLOBs" type="${tableClass.fullClassName}">
     <#if tableClass.pkFields??>
         <#list tableClass.pkFields as field>
@@ -32,5 +33,5 @@
         </#list>
     </#if>
     </resultMap>
-
+</#if>
 </mapper>
