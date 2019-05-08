@@ -16,6 +16,8 @@
             <property name="classSuffix" value="VO"/>
         </plugin>
     </#if>
+        <plugin type="com.paulzhangcc.tools.mybatis.plugin.LombokPlugin">
+        </plugin>
 
         <plugin type="com.paulzhangcc.tools.mybatis.plugin.JsonPlugin">
             <property name="targetProject" value="${targetProject}"/>

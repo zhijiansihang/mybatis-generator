@@ -27,20 +27,21 @@ public class Generator {
 
     public static void main(String[] args) throws Exception {
         MybatisGeneratorConfigModel mysqlGeneratorModel = MybatisGeneratorConfigModel.builder()
-                .targetPackage("com.meimeitech.video.rest")
-                .targetProject("F:\\tools\\mybatis-generator\\target")
+                .targetPackage("cn.exrick.xboot.modules.your")
+                .targetProject("F:\\tools\\fast-development\\xboot-plus\\xboot-plus-back\\src\\main\\java")
                 .dbDriverClass("com.mysql.jdbc.Driver")
-                .dbConnectionURL("jdbc:mysql://127.0.0.1:3306/qiumi?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                .dbConnectionURL("jdbc:mysql://127.0.0.1:3306/udp_admin?useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                 .dbUsername("root")
                 .dbPassword("root")
                 //.templateName("tk-generatorConfig-mysql.ftl")
                 .templateName("generatorConfig-mysql.ftl")
+                .javaVoGeneratorFlag("false")
                 .build();
 
         mysqlGeneratorModel.getTableList().add(
                 MybatisGeneratorConfigModel.TableInfo.builder()
-                        .tableName("qm_goods")
-                        .domainObjectName("QmGoods")
+                        .tableName("test")
+                        .domainObjectName("Test")
                         .generatedKey("id")
                         .build()
         );
